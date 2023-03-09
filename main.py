@@ -7,11 +7,9 @@
 #     print_hi('PyCharm')
 from collections import Counter
 
-
 def fib(n):
     counter = Counter()
     return fib_helper(n, dict({3: 2, 4: 3, 5: 5}), counter)
-
 
 def fib_helper(n, d, counter=None):
     counter["calls"] += 1
@@ -25,6 +23,5 @@ def fib_helper(n, d, counter=None):
             sum = fib_helper(n - 1, d, counter) + fib_helper(n - 2, d, counter)
             d[n] = sum
             return sum
-
 
 print(fib(20))
