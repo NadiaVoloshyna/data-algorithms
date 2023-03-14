@@ -17,12 +17,12 @@ class Point(object):
 
 def point_test():
     p1 = Point(1, 1)
-    p2 = Point(2, 2)
+    p2 = Point(3, 3)
     print(f" p1: {p1}")
     print(f" p2: {p2}")
     print( f"distance p1 <-> p2 { p1.distance(p2) }")
 
-#point_test()
+point_test()
 
 y_list = [20,93,72,35,54,95,25,37,29,72,65,66,49,43,35,61,97,66,64,22,83,69,19,21,69,40,35,81,15,41,74,12,3,65,
           31,12,48,68,41,40,99,13,70,30,20,35,84,96,1,93,61,83,24,27,93,86,96,43,10,51,27,87,40,35,83,44,15,89,
@@ -48,7 +48,7 @@ def neighbours(origin, distance):
 
     return neighbours
 
-neighbours(Point(1,20), 20)
+# neighbours(Point(1,20), 20)
 
 def plot_xy():
     x = [x + 1 for x in range(100)]
@@ -57,4 +57,4 @@ def plot_xy():
     plt.grid(True)
     plt.show()
 
-plot_xy()
+# plot_xy()

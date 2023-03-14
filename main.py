@@ -24,4 +24,4 @@ def fib_helper(n, d, counter=None):
             d[n] = sum
             return sum
 
-print(fib(20))
+print(fib(7))
