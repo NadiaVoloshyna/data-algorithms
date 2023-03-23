@@ -31,29 +31,32 @@ class Stack():
     def is_empty(self):
         return self.top == -1
 
+def demo_1():
+    s = Stack(3, 'i', 0)
+    reversed = Stack(3, 'i', 0)
 
-s = Stack(3, 'i', 0)
-reversed = Stack(3, 'i', 0)
+    s.push(3)
+    s.push(5)
+    s.push(7)
+    print(f"initial: {s}")
+    reversed.push(s.pop())
+    reversed.push(s.pop())
+    reversed.push(s.pop())
+    print(f"reversed: {reversed}")
 
-s.push(3)
-s.push(5)
-s.push(7)
-print(f"initial: {s}")
+demo_1()
 
-reversed.push(s.pop())
-reversed.push(s.pop())
-reversed.push(s.pop())
-print(f"reversed: {reversed}")
+def demo_2():
+    integers = Stack(26, 'i', 0)
+    letters = Stack(26, 'u', 'A')
 
+    for i in range (65,91):
+        integers.push(i)
+    print(f"integers: {integers}")
 
-integers = Stack(26, 'i', 0)
-letters = Stack(26, 'u', 'A')
+    while integers.is_empty() == False:
+        letters.push(chr(integers.pop()))
+    print(f"letters: {letters}")
 
-for i in range (65,91):
-    integers.push(i)
-print(f"integers: {integers}")
-
-while integers.is_empty() == False:
-    letters.push(chr(integers.pop()))
-print(f"letters: {letters}")
+demo_2()
 

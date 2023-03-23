@@ -25,7 +25,7 @@ class SinglyLinkedList:
     def __str__(self):
         return "head:" + str(self.head.data) + " tail:" + str(self.tail.data) + " size:" + str(self.size)
 
-    def getlist(self):
+    def get_list(self):
         l = []
         for node in self.iter():
             l.append(node)
@@ -99,19 +99,21 @@ class SinglyLinkedList:
         self.tail = None
         self.size = 0
 
-l = SinglyLinkedList()
-print("initial: " + str(l.getlist()))
-l.append(3)
-l.append(5)
-l.append(7)
-print("after append: " + str(l.getlist()))
-l.insert(2,2)
-print("after insertion: " + str(l.getlist()))
-l.insert(1,5)
-l.insert(9,1)
-print("after insertion at the beginning: " + str(l.getlist()))
-l.search(9)
-l.search(11)
-l.delete(9)
-print("after delete: " + str(l.getlist()))
+def linked_list_demo():
+    l = SinglyLinkedList()
+    print("initial: " + str(l.get_list()))
+    l.append(3)
+    l.append(5)
+    l.append(7)
+    print("after append: " + str(l.get_list()))
+    l.insert(2,2)
+    print("after insertion: " + str(l.get_list()))
+    l.insert(1,5)
+    l.insert(9,1)
+    print("after insertion at the beginning: " + str(l.get_list()))
+    l.search(9)
+    l.search(11)
+    l.delete(9)
+    print("after delete: " + str(l.get_list()))
 
+linked_list_demo()
