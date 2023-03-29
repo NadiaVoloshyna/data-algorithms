@@ -13,10 +13,8 @@ def linear_search_steps(runs, elements):
 
     for i in range(runs):
         target = round(random.random() * elements) + 2
-        print(f'target: {target}')
         l = list(test_data(elements))
         random.shuffle(l)
-        print(f'test data: {l}')
         steps = 0
         flag = False
 
@@ -29,9 +27,8 @@ def linear_search_steps(runs, elements):
         if not flag:
             results.append(steps)
 
-    print('--------------------------------------------------')
-    print(f'number of steps: {results}')
-    print(f'average number of steps: {sum(results) / runs}')
+    print(f'number of steps, linear search: {results}')
+    print(f'average number of steps:        {sum(results) / runs}')
 
 linear_search_steps(4,10)
 
