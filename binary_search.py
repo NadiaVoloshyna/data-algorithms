@@ -26,10 +26,10 @@ def binary_search_steps(runs,elements):
 
     for i in range(runs):
         target = round(random.random() * elements) + 2
-        #print(target) ###
+        print(f'target: {target}') ###
         l = list(test_data(elements))
-        #random.shuffle(l) ###
-        #print(l) ###
+        random.shuffle(l) ###
+        print(l) ###
         left = 0
         right = len(l) - 1
         steps = 0
@@ -41,7 +41,7 @@ def binary_search_steps(runs,elements):
            if target == l[midpoint]:
               flag = True
               results.append(steps)
-              #print(f'target index is: {midpoint}') ###
+              print(f'target index is: {midpoint}') ###
               break
            elif l[midpoint] > target:
               right = midpoint - 1
@@ -70,4 +70,4 @@ def tests():
     print('1,000,000 elements:')
     binary_search_steps(4,1000000)
 
-tests()
+#tests()
