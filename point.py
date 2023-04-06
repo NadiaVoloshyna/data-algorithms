@@ -48,7 +48,7 @@ def neighbours(origin, distance):
 
     return neighbours
 
-# neighbours(Point(1,20), 20)
+neighbours(Point(1,20), 20)
 
 def plot_xy():
     x = [x + 1 for x in range(100)]

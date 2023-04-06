@@ -43,3 +43,9 @@ print(fib(7))
 {8} One tiny niggle: in Python, function names should be written in lower case (with underscores if need be).  This seems to be a general consensus in the Python community.  
     Be consistent when naming your functions; eg avoid something like getList() (should probably be: get_list).  See: https://peps.python.org/pep-0008/#naming-conventions
 """
+"""
+{2} Tasks 1 & 2: consider factoring out the actual _search_ code ie have a dedicated linear_ and binary_ search function, respectively (they can be called from search_steps..)
+{3} Task 2: is_sorted() - this is good!  However, remember that Python allows you to write brief code ... eg one of your colleagues had just coded this as a one-liner:  
+def is_sorted(data): return sorted( data ) == data
+{4} Task 2: checking for duplicates - hint: a Python set allows unique values (only)
+"""
