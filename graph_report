@@ -1,0 +1,60 @@
+## request
+Develop a program that can utilise a series of points in a 2-dimensional coordinate system for generating a graph,
+computing a minimum spanning tree, and for rendering the graph as an image.
+Your program must be able to find all neighbours of each of the points (or point objects) that are located within a specified distance,
+and it must also be able to generate a minimum spanning tree of all points.
+
+## analysis
+The inputs to the program are the following:
+- Values for x: 1-100
+- Values for y:
+  20,93,72,35,54,95,25,37,29,72,65,66,49,43,35,61,97,66,64,22,83,69,19,21,69,40,35,81,15,41,74,12,3,65,31,12,48,68,41,40,
+  99,13,70,30,20,35,84,96,1,93,61,83,24,27,93,86,96,43,10,51,27,87,40,35,83,44,15,89,71,79,25,84,43,49,66,0,88,80,4,3,74,
+  10,41,45,75,34,41,44,50,99,41,37,26,6,94,94,76,48,32,42
+- String containing all y values
+  '20937235549525372972656649433561976664228369192169403581154174123653112486841409913703020358496193618324279386964310512
+  787403583441589717925844349660888043741041457534414450994137266949476483242'
+- SHA256 hash of y values (string)
+  "5c14e4599f1d2a39abe6b487ac2a5415c894c6882f5fdd4a40e02c7dd628829a"
+
+The program computes non-trivial operations on the test data. It checks the validity of test data, implements a Point class,
+instantiates Point objects, finds neighbours for each of the Points, implements a Graph class, generates
+the Minimum Spanning Tree (MST), and renders the MST as an image.
+
+The proposed user interface is:
+Minimum spanning tree example
+...........................
+
+## design
+The program is structured according to six sets of tasks:
+1. Check the validity of test data by calculating a SHA256 checksum of a string that contains the concatenated y values used.
+2. Implement a Point class, and use all x/y coordinate values for instantiating Point objects.
+3. Find all neighbours, within a certain distance of (0 < distance <= 20), for each of the Points.
+   Regard straight lines, connecting these neighbours, as edges of a graph.
+4. Implement a Graph class, and instantiate a graph (object) using the Point objects to represent vertices,
+   and the computed distances (same range as in point III) as weights.
+5. Choose and apply an appropriate algorithm for generating the Minimum Spanning Tree (MST).
+6. Use SVG or another appropriate method for rendering the MST as an image.
+
+Graph class diagram:
+- field: type
+- xpos: int
+----------------
++ method(type): return type
++ getWidth(): int
+
+The interface of the Graph class:
+     Graph Method                                     What It Does
+g = Student(name, number)               Returns a Student object with the given name and number of scores. Each score is initially 0.
+g.getName()                             Returns the student’s name.
+g.getScore(i)                           Returns the student’s ith score, i must range from 1 through the number of scores.
+g.setScore(i, score)                    Resets the student’s ith score to score, i must range from 1 through the number of scores.
+g.getAverage()                          Returns the student’s average score.
+g.getHighScore()                        Returns the student’s highest score.
+g.__str()__ Same as str(s).             Returns a string representation of the student’s information
+
+
+A working program, allowing you to demonstrate a non-trivial operation on the test data (creating a SHA256 checksum,
+instantiating a series of objects, generating a graph, computing a MST, etc), documented with a simple class diagram,
+implemented with clear Python code and using object-oriented programming techniques wherever appropriate.
+
