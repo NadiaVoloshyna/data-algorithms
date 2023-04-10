@@ -57,7 +57,7 @@ def neighbours():
     for el in l:
         for j in l:
             d = el.distance(j)
-            if d <= dist:
+            if d <= dist and el != j:
                 neighbours.append(j)
         print(f"point: {el}")
         lookup(neighbours)
@@ -67,5 +67,53 @@ def neighbours():
 
     return neighbours_list
 
-neighbours()
+#neighbours()
 
+class Node():
+    def __init__(self, point):
+        self.key = point
+        self.neighbours = {}
+
+    def add_neighbor(self, neighbor, weight = None):
+        self.neighbours[neighbor] = weight
+
+    def get_weight(self, neighbor):
+        return self.neighbours[neighbor]
+
+class Graph():
+    def __init__(self):
+        self.nodes = {}
+        self.__add_nodes()
+
+    def __generate(self):
+        """generates 100 Point objects"""
+        l = []
+        for item, el in zip(range(1, 101), y_list):
+            p = Point(item, el)
+            l.append(p)
+        return l
+
+    def __add_nodes(self):
+        """finds neighbours for each point/node"""
+        l = self.__generate()
+        dist = 20
+        for el in l:
+            node = Node(el)
+            for j in l:
+                d = el.distance(j)
+                if d <= dist and el != j:
+                    node.add_neighbor(j, d)
+            self.nodes[node.key] = node
+
+    def test(self):
+        for (key, value) in self.nodes.items():
+            print(f'key: {key}')
+            distances = []
+            for (key, value) in value.neighbours.items():
+                print(f'{key} distance: {value}')
+                distances.append(value)
+            m = min(distances)
+            print(f'minimum: {m}')
+
+g = Graph()
+g.test()
