@@ -85,6 +85,9 @@ class Graph():
         self.nodes = {}
         self.__add_nodes()
 
+    # def __str__(self):
+    #     return "x: " + str(self.x) + " y: " + str(self.y)
+
     def __generate(self):
         """generates 100 Point objects"""
         l = []
@@ -103,6 +106,16 @@ class Graph():
                 d = el.distance(j)
                 if d <= dist and el != j:
                     node.add_neighbor(j, d)
+                    # add to self.nodes - el as u, j as v, d as weight
+                    # self.graph.append([u, v, w])
+                    """
+                    graph = dict()
+                    graph['A'] = ['B', 'C']
+                    graph['B'] = ['E','C', 'A']
+                    graph['C'] = ['A', 'B', 'E','F']
+                    graph['E'] = ['B', 'C']
+                    graph['F'] = ['C']
+                    """
             self.nodes[node.key] = node
 
     def test(self):

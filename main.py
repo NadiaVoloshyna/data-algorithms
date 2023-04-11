@@ -49,3 +49,7 @@ print(fib(7))
 def is_sorted(data): return sorted( data ) == data
 {4} Task 2: checking for duplicates - hint: a Python set allows unique values (only)
 """
+"""
+{2} Resist the temptation of _printing_ in the sorting function.  You can return a tuple ie several names, eg return _list, passes, swaps , and the print on the "client side".
+{3} Bubble sort test data: the task was: to _generate_ the test data. (I thought that you'd have preferred this over typing in the 3 different lists.)
+"""
