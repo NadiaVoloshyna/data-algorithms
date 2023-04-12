@@ -126,16 +126,16 @@ class Tree(object):
                 return self.left_rotate(root)
         return root
 
-    def __str__(self):
+    def __str__(self, root=0):
         def append_r(node, level):
             s = ""
             if node is not None:
                 s += append_r(node.right, level+1)
                 s += "| " * level
-                s += str(node.data) + "\n"
+                s += str(node.value) + "\n"
                 s += append_r(node.left, level+1)
             return s
-        return append_r(self.root, 0)
+        return append_r(root, 0)
 
 def demo():
     t = Tree()
@@ -143,9 +143,12 @@ def demo():
     root = t.insert_node(root, 40)
     root = t.insert_node(root, 60)
     root = t.insert_node(root, 50)
+    root = t.insert_node(root, 80)
     root = t.insert_node(root, 70)
+    root = t.insert_node(root, 90)
 
-    #print(t)
+    print(t.__str__(root))
+
     print("PREORDER")
     t.pre_order(root)
 
