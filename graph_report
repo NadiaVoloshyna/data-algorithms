@@ -36,22 +36,17 @@ The program is structured according to six sets of tasks:
 5. Choose and apply an appropriate algorithm for generating the Minimum Spanning Tree (MST).
 6. Use SVG or another appropriate method for rendering the MST as an image.
 
-Graph class diagram:
-- field: type
-- xpos: int
-----------------
-+ method(type): return type
-+ getWidth(): int
-
 The interface of the Graph class:
      Graph Method                                     What It Does
-g = Student(name, number)               Returns a Student object with the given name and number of scores. Each score is initially 0.
+g = Graph(points)                       Returns a Graph object with the given points representing vertices and the computed distances as weights.
+g.__?add_points                         Finds all neighbours, within a certain distance for each of the Points.
+g.__?add_edges                          Creates the list of tuples that form edges with weights in the graph.
+g.__str__()                             Returns a string representation of the graph edges and weights.
+
 g.getName()                             Returns the student’s name.
 g.getScore(i)                           Returns the student’s ith score, i must range from 1 through the number of scores.
 g.setScore(i, score)                    Resets the student’s ith score to score, i must range from 1 through the number of scores.
-g.getAverage()                          Returns the student’s average score.
-g.getHighScore()                        Returns the student’s highest score.
-g.__str()__ Same as str(s).             Returns a string representation of the student’s information
+
 
 
 A working program, allowing you to demonstrate a non-trivial operation on the test data (creating a SHA256 checksum,
