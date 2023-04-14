@@ -40,26 +40,33 @@ class Point(object):
 class Graph():
     """ Graph data structure"""
     def __init__(self, points):
+        self.points = points
         self.graph = {}
         self.edges_list = []
-        self.add_points(points)
-        self.add_edges(points)
+        self.add_points()
+        self.add_edges()
 
-    def add_points(self, points):
-        """finds neighbours for each point/node"""
-        dist = 20
-        for el in points:
-            neighbours = {}
-            for j in points:
-                d = el.distance(j)
-                if d <= dist and el != j:
-                    neighbours[j] = d
-            self.graph[el] = neighbours
+    def add_points(self):
+        for p in self.points:
+            self.add_point(p)
 
-    def add_edges(self, points):
-        for p in points:
+    def add_edges(self):
+        for p in self.points:
             for (neighbor, distance) in self.graph[p].items():
-                self.edges_list.append((p, neighbor, distance))
+                self.add_edge(p, neighbor, distance)
+
+    def add_point(self, p):
+        """finds neighbours for the point"""
+        dist = 20
+        neighbours = {}
+        for el in self.points:
+            d = p.distance(el)
+            if d <= dist and el != p:
+                neighbours[el] = d
+        self.graph[p] = neighbours
+
+    def add_edge(self, p1, p2, d):
+        self.edges_list.append((p1, p2, d))
 
     def search(self):
         root = list(self.graph.keys())[0]
@@ -77,53 +84,82 @@ class Graph():
 
         return visited
 
-        #sorted_edges = sorted(self.edges_list, key = lambda x: x[2])
+    # def find(self, parent, i):
+    #     if parent[i] != i:
+    #         parent[i] = self.find(parent, parent[i])
+    #     return parent[i]
 
-    def find_path(self, point, n):
-        neighbours = self.graph[point]
-        sorted_neighbours = {key: val for key, val in sorted(neighbours.items(), key=lambda el: el[1])}
-        if n >= len(list(sorted_neighbours.keys())):
-            return None, None
-        next_point = list(sorted_neighbours.keys())[n]
-        next_point_distance = list(sorted_neighbours.values())[n]
+    def find(self, parent, i):
+        if parent[i] == i:
+            return i
+        else:
+            return self.find(parent, parent[i])
 
-        return next_point, next_point_distance
+    # def union(self, parent, rank, x, y):
+    #     if rank[x] < rank[y]:
+    #         parent[x] = y
+    #     elif rank[x] > rank[y]:
+    #         parent[y] = x
+    #     else:
+    #         parent[y] = x
+    #         rank[x] += 1
 
-    def test(self, prev, root, result):
-        if root is None or prev is None:
-            return result
-        prev_next = 0
-        d1 = 0
-        c = 1
-        while True:
-            if prev_next not in result and prev_next != 0 or prev_next == None:
-                break
-            prev_next, d1 = self.find_path(prev,c)
-            c += 1
-        root_next = 0
-        d2 = 0
-        n = 1
-        while True:
-            if root_next not in result and root_next != 0 and root_next != prev_next  or root_next == None:
-                break
-            root_next, d2 = self.find_path(root,n)
-            n += 1
-        if d1 > d2 or d1 == None:
-            prev = root
-            root = root_next
-        elif d2 > d1 or d2 == None:
-            prev = prev
-            root = prev_next
+    def union(self, parent, rank, x, y):
+        xroot = self.find(parent, x)
+        yroot = self.find(parent, y)
+        if rank[xroot] < rank[yroot]:
+            parent[xroot] = yroot
+        elif rank[xroot] > rank[yroot]:
+            parent[yroot] = xroot
+        else:
+            parent[yroot] = xroot
+            rank[xroot] += 1
 
-        result.append(root)
+    # def mst(self):
+    #     result = []
+    #     i = e = 0
+    #     sorted_edges = sorted(self.edges_list, key=lambda x: x[2])
+    #     parent = {}
+    #     rank = dict.fromkeys(self.points, 0)
+    #
+    #     for node in self.points:
+    #         parent[node] = node
+    #
+    #     while e < len(self.points) - 1:
+    #         u, v, w = sorted_edges[i]
+    #         i = i + 1
+    #         x = self.find(parent, u)
+    #         y = self.find(parent, v)
+    #         if x != y:
+    #             e = e + 1
+    #             result.append([u, v, w])
+    #             self.union(parent, rank, x, y)
+    #
+    #     for s, d, w in result:
+    #         print("%s - %s: %s" % (s, d, w))
+    #     print(len(result))
 
-        self.test(prev, root, result)
+    def mst(self):
+        result = []
+        i, e = 0, 0
+        sorted_edges = sorted(self.edges_list, key=lambda x: x[2])
+        parent = {}
+        rank = dict.fromkeys(self.points, 0)
+        for node in self.points:
+            parent[node] = node
 
-    def mst(self, points):
-        root = points[0]
-        next, d = self.find_path(root, 0)
-        result = [root, next]
-        self.test(root, next, result)
+        while e < len(self.points) - 1:
+            s, d, w = sorted_edges[i]
+            i += 1
+            x = self.find(parent, s)
+            y = self.find(parent, d)
+            if x != y:
+                e += 1
+                result.append([s, d, w])
+                self.union(parent, rank, x, y)
+        for s, d, w in result:
+            print("%s - %s: %s" % (s, d, w))
+        print(len(result))
 
     def __str__(self):
         s = ""
@@ -144,7 +180,7 @@ def generate():
 def graph_demo():
     points = generate()
     g = Graph(points)
-    g.mst(points)
+    g.mst()
     #print(g)
 
 graph_demo()

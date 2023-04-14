@@ -53,3 +53,52 @@ def is_sorted(data): return sorted( data ) == data
 {2} Resist the temptation of _printing_ in the sorting function.  You can return a tuple ie several names, eg return _list, passes, swaps , and the print on the "client side".
 {3} Bubble sort test data: the task was: to _generate_ the test data. (I thought that you'd have preferred this over typing in the 3 different lists.)
 """
+
+
+def find_path(self, point, n):
+    neighbours = self.graph[point]
+    sorted_neighbours = {key: val for key, val in sorted(neighbours.items(), key=lambda el: el[1])}
+    if n >= len(list(sorted_neighbours.keys())):
+        return None, None
+    next_point = list(sorted_neighbours.keys())[n]
+    next_point_distance = list(sorted_neighbours.values())[n]
+
+    return next_point, next_point_distance
+
+
+def test(self, prev, root, result):
+    if root is None or prev is None:
+        return result
+    prev_next = 0
+    d1 = 0
+    c = 1
+    while True:
+        if prev_next not in result and prev_next != 0 or prev_next == None:
+            break
+        prev_next, d1 = self.find_path(prev, c)
+        c += 1
+    root_next = 0
+    d2 = 0
+    n = 1
+    while True:
+        if root_next not in result and root_next != 0 and root_next != prev_next or root_next == None:
+            break
+        root_next, d2 = self.find_path(root, n)
+        n += 1
+    if d1 == None or d1 > d2:
+        prev = root
+        root = root_next
+    elif d2 == None or d2 > d1:
+        prev = prev
+        root = prev_next
+
+    result.append(root)
+
+    self.test(prev, root, result)
+
+
+def mst(self, points):
+    root = points[0]
+    next, d = self.find_path(root, 0)
+    result = [root, next]
+    self.test(root, next, result)
