@@ -1,6 +1,7 @@
 import hashlib
 from math import sqrt
 from collections import deque
+import drawsvg as draw
 
 # values for y
 y_list = [20,93,72,35,54,95,25,37,29,72,65,66,49,43,35,61,97,66,64,22,83,69,19,21,69,40,35,81,15,41,74,12,3,65,
@@ -84,82 +85,65 @@ class Graph():
 
         return visited
 
-    # def find(self, parent, i):
-    #     if parent[i] != i:
-    #         parent[i] = self.find(parent, parent[i])
-    #     return parent[i]
-
     def find(self, parent, i):
         if parent[i] == i:
             return i
         else:
             return self.find(parent, parent[i])
 
-    # def union(self, parent, rank, x, y):
-    #     if rank[x] < rank[y]:
-    #         parent[x] = y
-    #     elif rank[x] > rank[y]:
-    #         parent[y] = x
-    #     else:
-    #         parent[y] = x
-    #         rank[x] += 1
-
-    def union(self, parent, rank, x, y):
-        xroot = self.find(parent, x)
-        yroot = self.find(parent, y)
-        if rank[xroot] < rank[yroot]:
-            parent[xroot] = yroot
-        elif rank[xroot] > rank[yroot]:
-            parent[yroot] = xroot
+    def union(self, parent, subtree_sizes, x, y):
+        x_root = self.find(parent, x)
+        y_root = self.find(parent, y)
+        if subtree_sizes[x_root] < subtree_sizes[y_root]:
+            parent[x_root] = y_root
+        elif subtree_sizes[x_root] > subtree_sizes[y_root]:
+            parent[y_root] = x_root
         else:
-            parent[yroot] = xroot
-            rank[xroot] += 1
-
-    # def mst(self):
-    #     result = []
-    #     i = e = 0
-    #     sorted_edges = sorted(self.edges_list, key=lambda x: x[2])
-    #     parent = {}
-    #     rank = dict.fromkeys(self.points, 0)
-    #
-    #     for node in self.points:
-    #         parent[node] = node
-    #
-    #     while e < len(self.points) - 1:
-    #         u, v, w = sorted_edges[i]
-    #         i = i + 1
-    #         x = self.find(parent, u)
-    #         y = self.find(parent, v)
-    #         if x != y:
-    #             e = e + 1
-    #             result.append([u, v, w])
-    #             self.union(parent, rank, x, y)
-    #
-    #     for s, d, w in result:
-    #         print("%s - %s: %s" % (s, d, w))
-    #     print(len(result))
+            parent[y_root] = x_root
+            subtree_sizes[x_root] += 1
 
     def mst(self):
         result = []
         i, e = 0, 0
         sorted_edges = sorted(self.edges_list, key=lambda x: x[2])
         parent = {}
-        rank = dict.fromkeys(self.points, 0)
+        subtree_sizes = dict.fromkeys(self.points, 0)
         for node in self.points:
             parent[node] = node
 
         while e < len(self.points) - 1:
-            s, d, w = sorted_edges[i]
+            node1, node2, weight = sorted_edges[i]
             i += 1
-            x = self.find(parent, s)
-            y = self.find(parent, d)
+            x = self.find(parent, node1)
+            y = self.find(parent, node2)
             if x != y:
                 e += 1
-                result.append([s, d, w])
-                self.union(parent, rank, x, y)
-        for s, d, w in result:
-            print("%s - %s: %s" % (s, d, w))
-        print(len(result))
+                result.append([node1, node2, weight])
+                self.union(parent, subtree_sizes, x, y)
+        for node1, node2, weight in result:
+            print("%s - %s: %s" % (node1, node2, weight))
+
+        d = draw.Drawing(800, 800, origin=(0, 0), id_prefix = 'd')
+        # d = dw.Drawing(width, height, origin=(0, 0),
+        #                context: drawsvg.types.Context = None, animation_config = None,
+        # id_prefix = 'd', ** svg_args)
+
+        for edge in result:
+            node1, node2, weight = edge
+            d.append(draw.Line(node1.x, node1.y,
+                               node2.x, node2.y,
+                               stroke='blue', stroke_width=3, fill='none', marker_end=''))
+        for vertex in self.points:
+            d.append(draw.Circle(vertex.x, vertex.y, 2, fill='red', stroke_width=2, stroke='black'))
+        # for vertex in self.points:
+        #     d.append(draw.Text(vertex.get_name(), 18, vertex.get_x() - 7, vertex.get_y() - 5,
+        #                           fill='black'))  # Text with font size 85
+        d.save_svg('example.svg')
+
+        # f = open('graphV1.svg', 'w')
+        # f.write(d.asSvg())
+        # f.close()
+
 
     def __str__(self):
         s = ""
@@ -185,11 +169,7 @@ def graph_demo():
 
 graph_demo()
 
-"""
-plt.figure()
-nx.draw_networkx(T, pos=pos2, with_labels=False, node_size = 15)
-plt.show()
-"""
+
 """
         matrix_elements = sorted(self.graph, key=lambda x: x.x)
         cols = rows = len(matrix_elements)
