@@ -21,35 +21,48 @@ The program computes non-trivial operations on the test data. It checks the vali
 instantiates Point objects, finds neighbours for each of the Points, implements a Graph class, generates
 the Minimum Spanning Tree (MST), and renders the MST as an image.
 
-The proposed user interface is:
 Minimum spanning tree example
 ...........................
 
 ## design
-The program is structured according to six sets of tasks:
-1. Check the validity of test data by calculating a SHA256 checksum of a string that contains the concatenated y values used.
-2. Implement a Point class, and use all x/y coordinate values for instantiating Point objects.
+The program is structured according to five sets of tasks:
+1. Check the validity of test data.
+2. Implement a Point class, and use x/y coordinate values for instantiating Point objects.
 3. Find all neighbours, within a certain distance of (0 < distance <= 20), for each of the Points.
-   Regard straight lines, connecting these neighbours, as edges of a graph.
-4. Implement a Graph class, and instantiate a graph (object) using the Point objects to represent vertices,
-   and the computed distances (same range as in point III) as weights.
-5. Choose and apply an appropriate algorithm for generating the Minimum Spanning Tree (MST).
-6. Use SVG or another appropriate method for rendering the MST as an image.
+   Regard straight lines, connecting these neighbours, as edges of a graph. Implement a Graph class
+   using the Point objects to represent vertices, and the computed distances as weights.
+4. Generate the Minimum Spanning Tree (MST).
+5. Use SVG for rendering the MST as an image.
+
+The program uses SHA256 from the SHA-2 family of hash algorithms to check the validity of the data. It calculates a SHA256 checksum
+of a string that contains the concatenated y values. SHA-2 is a family of strong cryptographic hash functions.
+
+Point class creates a Point object with x and y coordinates and distance() method that returns the distance between two Point objects.
+Point class is used for instantiating 100 Point objects that are considered as vertices of the graph.
+
+The Graph is stored in memory as an adjacency list for which a dictionary data structure is used. The adjacency list is better than an adjacency matrix
+when the graph is going to be sparse and we may need to add or delete the nodes in the graph frequently. Also the Graph is allocated as
+the list of vertices and the list os tuples with edges and their weights.
 
 The interface of the Graph class:
      Graph Method                                     What It Does
 g = Graph(points)                       Returns a Graph object with the given points representing vertices and the computed distances as weights.
-g.__?add_points                         Finds all neighbours, within a certain distance for each of the Points.
-g.__?add_edges                          Creates the list of tuples that form edges with weights in the graph.
+g.add_vertex()                          Finds all neighbours, within a certain distance for the Point.
+g.add_edge()                            Creates a tuple that forms the edge with a weight in the graph.
+g.search()                              Visits all the vertices of the graph and returns the list.
+g.find()                                Determines which set a particular element is in.
+g.union()                               Merges two sets containing x and y.
+g.spanning_tree()                       Constructs a minimum spanning tree from a weighted, undirected graph.
+g.mst_svg()                             Generates the SVG image that represents the minimum spanning tree.
 g.__str__()                             Returns a string representation of the graph edges and weights.
 
-g.getName()                             Returns the student’s name.
-g.getScore(i)                           Returns the student’s ith score, i must range from 1 through the number of scores.
-g.setScore(i, score)                    Resets the student’s ith score to score, i must range from 1 through the number of scores.
+For the search Graph algorithm the Breadth-first search approach is used. It works level by level. A queue data structure is applied
+to store the information of vertices that are to be visited in a graph.
 
+The program generates the minimum spanning tree using the Kruskal’s Minimum Spanning Tree algorithm. The Kruskal's algorithm is chosen
+because it works better for a sparse graph. Union Find data structure for the algorithm is implemented by tree.
 
+A Python 3 library drawsvg 2 is used for generating the svg image of the constructed minimum spanning tree. It is available on PyPI and
+has a big collection of functions for rendering lines, shapes, and text.
 
-A working program, allowing you to demonstrate a non-trivial operation on the test data (creating a SHA256 checksum,
-instantiating a series of objects, generating a graph, computing a MST, etc), documented with a simple class diagram,
-implemented with clear Python code and using object-oriented programming techniques wherever appropriate.
 
