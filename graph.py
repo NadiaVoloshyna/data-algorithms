@@ -1,3 +1,8 @@
+"""
+Program: graph.py
+Author: Nadiia Voloshyna
+Last date modified: 19/04/23
+"""
 import hashlib
 from math import sqrt
 from collections import deque
@@ -22,7 +27,7 @@ def test_data():
     sha256_generated = m.hexdigest()
     return sha256_received == sha256_generated
 
-print(f'data is valid: {test_data()}')
+#print(f'data is valid: {test_data()}')
 
 class Point(object):
     """represents a coordinate"""
@@ -84,6 +89,7 @@ class Graph():
                 for el in remaining:
                     visited.append(el)
                     q.append(el)
+        print(f'number of visited nodes: {len(visited)}')
         return visited
 
     def find(self, parent, i):
@@ -123,6 +129,8 @@ class Graph():
                 e += 1
                 self.mst.append([node1, node2, weight])
                 self.union(parent, subtree_sizes, x, y)
+        for node1, node2, weight in self.mst:
+            print("%s - %s: %s" % (node1, node2, weight))
 
     def mst_svg(self):
         """generates SVG image for MST"""
@@ -161,7 +169,8 @@ def graph_demo():
     g = Graph(points)
     g.spanning_tree()
     g.mst_svg()
-    print(g)
+    #print(g)
+    #g.search()
 
 graph_demo()
 

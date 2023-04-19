@@ -42,7 +42,7 @@ Point class is used for instantiating 100 Point objects that are considered as v
 
 The Graph is stored in memory as an adjacency list for which a dictionary data structure is used. The adjacency list is better than an adjacency matrix
 when the graph is going to be sparse and we may need to add or delete the nodes in the graph frequently. Also the Graph is allocated as
-the list of vertices and the list os tuples with edges and their weights.
+the list of vertices and the list of tuples with edges and their weights.
 
 The interface of the Graph class:
      Graph Method                                     What It Does
