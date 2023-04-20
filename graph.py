@@ -129,6 +129,7 @@ class Graph():
                 e += 1
                 self.mst.append([node1, node2, weight])
                 self.union(parent, subtree_sizes, x, y)
+        print(f'number of edges: {len(self.mst)}')
         for node1, node2, weight in self.mst:
             print("%s - %s: %s" % (node1, node2, weight))
 
